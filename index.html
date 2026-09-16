@@ -151,7 +151,7 @@ button,input,select,textarea{max-width:100%;box-sizing:border-box}
 <style id="v29-8-43-universal-quick-access">
 .jbQuickAccessBtn{position:relative!important;background:linear-gradient(135deg,#fff7ed,#fff)!important;border-color:#ffd39a!important;color:#9a4b00!important;font-weight:900!important}
 .jbQuickAccessBtn .navIcon{background:#fff0d9!important;color:#f97316!important}
-.jbQuickAccessBtn:after{content:'v29.8.43';font-size:9px;font-weight:900;color:#f97316;margin-right:2px;opacity:.9}
+.jbQuickAccessBtn:after{content:'29.8.44';font-size:9px;font-weight:900;color:#f97316;margin-right:2px;opacity:.9}
 .jbQuickAccessPage{margin-bottom:22px}
 .jbQuickHero{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px;border-radius:22px;background:linear-gradient(135deg,#111827,#1f2937 58%,#4a2b12);color:#fff;box-shadow:0 16px 40px rgba(15,23,42,.14);margin-bottom:16px}
 .jbQuickHero h2{margin:0;font-size:25px}.jbQuickHero p{margin:7px 0 0;color:#cbd5e1;font-size:13px}
@@ -727,7 +727,7 @@ function quickAccessPage(){
   'رستوران':[['📦','سفارش‌های رستوران','مدیریت سفارش‌های دریافتی','سفارش‌ها'],['🍳','آماده‌سازی آنلاین','وضعیت آماده‌سازی و اعلام آمادگی غذا','آماده‌سازی آنلاین'],['🏦','مالی','نمایش کرایه و تسویه‌های رستوران','مالی'],['🎫','پشتیبانی','ثبت و پیگیری درخواست‌های پشتیبانی','پشتیبانی']],
   'مشتری':[['🛒','ثبت سفارش','شروع سریع ثبت سفارش جدید','ثبت سفارش'],['📦','سفارش‌های من','پیگیری سفارش‌های ثبت‌شده','سفارش‌ها'],['📍','آدرس‌ها','مدیریت آدرس‌های ذخیره‌شده','آدرس‌ها'],['💳','پرداخت‌ها','مشاهده پرداخت‌های مشتری','پرداخت‌ها'],['🎫','پشتیبانی','ثبت و پیگیری درخواست‌های پشتیبانی','پشتیبانی']]
  }[role]||[];
- return `<div class="jbQuickAccessPage"><section class="jbQuickHero"><div><h2>⚡ دسترسی سریع جت‌باکس</h2><p>نسخه 29.8.43 • دسترسی سریع متناسب با نقش فعلی: ${esc(roleTitle)}</p></div><div class="jbQuickVersion">JET BOX • v29.8.43</div></section><div class="jbQuickGrid">${cards.map(c=>`<article class="jbQuickCard"><h3>${c[0]} ${c[1]}</h3><p>${c[2]}</p><button onclick="go('${c[3]}')">ورود سریع</button></article>`).join('')}</div></div>`;
+ return `<div class="jbQuickAccessPage"><section class="jbQuickHero"><div><h2>⚡ دسترسی سریع جت‌باکس</h2><p>نسخه 29.8.44 • دسترسی سریع متناسب با نقش فعلی: ${esc(roleTitle)}</p></div><div class="jbQuickVersion">JET BOX • v29.8.44</div></section><div class="jbQuickGrid">${cards.map(c=>`<article class="jbQuickCard"><h3>${c[0]} ${c[1]}</h3><p>${c[2]}</p><button onclick="go('${c[3]}')">ورود سریع</button></article>`).join('')}</div></div>`;
 }
 
 function page(p){
