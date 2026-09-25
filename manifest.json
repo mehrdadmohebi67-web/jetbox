@@ -1,0 +1,16 @@
+{
+  "name": "Jet Box | جت‌باکس یزد",
+  "short_name": "Jet Box",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
