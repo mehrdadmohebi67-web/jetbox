@@ -1,0 +1,148 @@
+name: Build JetBox APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: دریافت کد جت‌باکس
+        uses: actions/checkout@v4
+
+      - name: نصب Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: آماده‌سازی Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: false
+
+      - name: ساخت ساختار Android
+        run: |
+          mkdir -p android-build/app/src/main/java/ir/jetbox/app
+          mkdir -p android-build/app/src/main/res/values
+          mkdir -p android-build/app/src/main/res/drawable
+          mkdir -p android-build/app/src/main/assets
+
+          cp index.html android-build/app/src/main/assets/index.html
+          cp logo.png android-build/app/src/main/assets/logo.png
+          cp icon-512.png android-build/app/src/main/assets/icon-512.png
+          cp manifest.json android-build/app/src/main/assets/manifest.json
+          cp manifest.webmanifest android-build/app/src/main/assets/manifest.webmanifest
+          cp sw.js android-build/app/src/main/assets/sw.js
+
+          cp MainActivity.java android-build/app/src/main/java/ir/jetbox/app/MainActivity.java
+          cp strings.xml android-build/app/src/main/res/values/strings.xml
+          cp styles.xml android-build/app/src/main/res/values/styles.xml
+          cp logo.png android-build/app/src/main/res/drawable/logo.png
+
+          cat > android-build/settings.gradle <<'EOF'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+
+          rootProject.name = "JetBox"
+          include(":app")
+          EOF
+
+          cat > android-build/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application' version '8.5.2' apply false
+          }
+          EOF
+
+          cat > android-build/gradle.properties <<'EOF'
+          android.useAndroidX=true
+          android.nonTransitiveRClass=true
+          EOF
+
+          cat > android-build/app/build.gradle <<'EOF'
+          plugins {
+              id 'com.android.application'
+          }
+
+          android {
+              namespace 'ir.jetbox.app'
+              compileSdk 35
+
+              defaultConfig {
+                  applicationId 'ir.jetbox.app.test1594'
+                  minSdk 23
+                  targetSdk 35
+                  versionCode 1594
+                  versionName '29.8.50.15.94'
+              }
+          }
+
+          dependencies {
+              implementation 'androidx.core:core:1.13.1'
+              implementation 'androidx.webkit:webkit:1.11.0'
+          }
+          EOF
+
+          cat > android-build/app/src/main/AndroidManifest.xml <<'EOF'
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+              <uses-permission android:name="android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+              <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+              <application
+                  android:theme="@style/AppTheme"
+                  android:label="جت‌باکس"
+                  android:icon="@drawable/logo"
+                  android:roundIcon="@drawable/logo"
+                  android:usesCleartextTraffic="false"
+                  android:allowBackup="false"
+                  android:supportsRtl="true">
+
+                  <activity
+                      android:name=".MainActivity"
+                      android:screenOrientation="landscape"
+                      android:exported="true">
+
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+
+                  </activity>
+              </application>
+
+          </manifest>
+          EOF
+
+      - name: نصب Gradle 8.7
+        run: |
+          wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
+          unzip -q gradle-8.7-bin.zip
+
+      - name: ساخت APK
+        run: |
+          cd android-build
+          ../gradle-8.7/bin/gradle :app:assembleDebug --no-daemon
+
+      - name: تحویل APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: JetBox-29.8.50.15.94-debug
+          path: android-build/app/build/outputs/apk/debug/app-debug.apk
