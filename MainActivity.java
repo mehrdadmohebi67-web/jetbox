@@ -610,8 +610,9 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface
-        public void backupLocalData(
-                String json
+        public void exportBackup(
+        String json
+)
         ) {
 
             pendingBackupJson = json;
@@ -652,7 +653,7 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface
-        public void restoreLocalData() {
+        public void importBackup() {
 
             Intent intent =
                     new Intent(
