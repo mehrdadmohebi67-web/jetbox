@@ -85,7 +85,7 @@ jobs:
               compileSdk 35
 
               defaultConfig {
-                  applicationId 'ir.jetbox.app'
+                  applicationId 'ir.jetbox.app.test1594'
                   minSdk 23
                   targetSdk 35
                   versionCode 1594
