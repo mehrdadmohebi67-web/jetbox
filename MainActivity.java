@@ -101,23 +101,24 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onPageFinished(
-                    WebView view,
-                    String url
-            ) {
-                super.onPageFinished(view, url);
+public void onPageFinished(
+        WebView view,
+        String url
+) {
+    super.onPageFinished(view, url);
 
-                view.evaluateJavascript(
-        "(function(){try{" +
+    view.evaluateJavascript(
+            "(function(){try{" +
 
-        "window.close=function(){" +
-        "if(window.JetBoxAndroid)" +
-        "JetBoxAndroid.exitApp();" +
-        "};" +
+            "window.close=function(){" +
+            "if(window.JetBoxAndroid)" +
+            "JetBoxAndroid.exitApp();" +
+            "};" +
 
-        "}catch(e){}})();",
-        null
-);
+            "}catch(e){}})();",
+            null
+    );
+}
 
                         "document.body.appendChild(b);" +
 
