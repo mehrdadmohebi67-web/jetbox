@@ -108,35 +108,16 @@ public class MainActivity extends Activity {
                 super.onPageFinished(view, url);
 
                 view.evaluateJavascript(
-                        "(function(){try{" +
+        "(function(){try{" +
 
-                        "window.close=function(){" +
-                        "if(window.JetBoxAndroid)" +
-                        "JetBoxAndroid.exitApp();" +
-                        "};" +
+        "window.close=function(){" +
+        "if(window.JetBoxAndroid)" +
+        "JetBoxAndroid.exitApp();" +
+        "};" +
 
-                        "var b=document.createElement('button');" +
-
-                        "b.textContent='پشتیبان جت‌باکس';" +
-
-                        "b.style.cssText=" +
-                        "'position:fixed;" +
-                        "top:8px;" +
-                        "right:8px;" +
-                        "z-index:2147483647;" +
-                        "padding:9px 12px;" +
-                        "border:0;" +
-                        "border-radius:8px;" +
-                        "background:#111;" +
-                        "color:#fff;" +
-                        "font-size:13px;" +
-                        "opacity:.88;';" +
-
-                        "b.onclick=function(){" +
-                        "if(window.JetBoxAndroid)" +
-                        "JetBoxAndroid.backupLocalData(" +
-                        "JSON.stringify(localStorage));" +
-                        "};" +
+        "}catch(e){}})();",
+        null
+);
 
                         "document.body.appendChild(b);" +
 
