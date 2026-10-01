@@ -18,12 +18,11 @@ jobs:
           java-version: '17'
 
       - name: آماده‌سازی Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: نصب Android SDK
-        run: |
-          yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: false
 
       - name: ساخت ساختار Android
         run: |
@@ -89,7 +88,7 @@ jobs:
                   applicationId 'ir.jetbox.app'
                   minSdk 23
                   targetSdk 35
-                  versionCode 2998501594
+                  versionCode 1594
                   versionName '29.8.50.15.94'
               }
           }
