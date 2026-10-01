@@ -101,50 +101,19 @@ public class MainActivity extends Activity {
             }
 
             @Override
-public void onPageFinished(
-        WebView view,
-        String url
-) {
-    super.onPageFinished(view, url);
+            public void onPageFinished(
+                    WebView view,
+                    String url
+            ) {
+                super.onPageFinished(view, url);
 
-    view.evaluateJavascript(
-            "(function(){try{" +
+                view.evaluateJavascript(
+                        "(function(){try{" +
 
-            "window.close=function(){" +
-            "if(window.JetBoxAndroid)" +
-            "JetBoxAndroid.exitApp();" +
-            "};" +
-
-            "}catch(e){}})();",
-            null
-    );
-}
-
-                        "document.body.appendChild(b);" +
-
-                        "var r=document.createElement('button');" +
-
-                        "r.textContent='بازیابی';" +
-
-                        "r.style.cssText=" +
-                        "'position:fixed;" +
-                        "top:8px;" +
-                        "right:145px;" +
-                        "z-index:2147483647;" +
-                        "padding:9px 12px;" +
-                        "border:0;" +
-                        "border-radius:8px;" +
-                        "background:#444;" +
-                        "color:#fff;" +
-                        "font-size:13px;" +
-                        "opacity:.88;';" +
-
-                        "r.onclick=function(){" +
+                        "window.close=function(){" +
                         "if(window.JetBoxAndroid)" +
-                        "JetBoxAndroid.restoreLocalData();" +
+                        "JetBoxAndroid.exitApp();" +
                         "};" +
-
-                        "document.body.appendChild(r);" +
 
                         "}catch(e){}})();",
                         null
@@ -429,7 +398,7 @@ public void onPageFinished(
                             this,
                             "ذخیره پشتیبان ناموفق بود",
                             Toast.LENGTH_LONG
-                    ).show();
+                        ).show();
                 }
             }
 
@@ -593,8 +562,7 @@ public void onPageFinished(
 
         @JavascriptInterface
         public void exportBackup(
-        String json
-)
+                String json
         ) {
 
             pendingBackupJson = json;
