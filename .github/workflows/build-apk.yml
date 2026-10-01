@@ -91,6 +91,22 @@ jobs:
                   versionCode 1594
                   versionName '29.8.50.15.94'
               }
+
+              signingConfigs {
+                  release {
+                      storeFile file("${rootProject.projectDir}/jetbox-release.jks")
+                      storePassword System.getenv("JETBOX_STORE_PASSWORD")
+                      keyAlias System.getenv("JETBOX_KEY_ALIAS")
+                      keyPassword System.getenv("JETBOX_KEY_PASSWORD")
+                  }
+              }
+
+              buildTypes {
+                  release {
+                      minifyEnabled false
+                      signingConfig signingConfigs.release
+                  }
+              }
           }
 
           dependencies {
@@ -131,18 +147,29 @@ jobs:
           </manifest>
           EOF
 
+      - name: بازیابی کلید امضای جت‌باکس
+        env:
+          JETBOX_KEYSTORE_BASE64: ${{ secrets.JETBOX_KEYSTORE_BASE64 }}
+        run: |
+          echo "$JETBOX_KEYSTORE_BASE64" | base64 --decode > android-build/jetbox-release.jks
+          test -s android-build/jetbox-release.jks
+
       - name: نصب Gradle 8.7
         run: |
           wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
           unzip -q gradle-8.7-bin.zip
 
-      - name: ساخت APK
+      - name: ساخت APK امضاشده
+        env:
+          JETBOX_STORE_PASSWORD: ${{ secrets.JETBOX_STORE_PASSWORD }}
+          JETBOX_KEY_PASSWORD: ${{ secrets.JETBOX_KEY_PASSWORD }}
+          JETBOX_KEY_ALIAS: ${{ secrets.JETBOX_KEY_ALIAS }}
         run: |
           cd android-build
-          ../gradle-8.7/bin/gradle :app:assembleDebug --no-daemon
+          ../gradle-8.7/bin/gradle :app:assembleRelease --no-daemon
 
       - name: تحویل APK
         uses: actions/upload-artifact@v4
         with:
-          name: JetBox-29.8.50.15.94-file-upload-test
-          path: android-build/app/build/outputs/apk/debug/app-debug.apk
+          name: JetBox-29.8.50.15.94-release-signed
+          path: android-build/app/build/outputs/apk/release/app-release.apk
